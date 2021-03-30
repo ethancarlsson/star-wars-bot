@@ -32,7 +32,7 @@ class RoboReplier {
     };
 
     getHottest = () => {
-        $.ajax({url: 'https://www.reddit.com/r/PrequelMemes.json'}).done((r) => {
+        $.ajax({url: 'https://www.reddit.com/r/PrequelMemes/top.json'}).done((r) => {
             r['data']['children'].forEach(subReddit => {
                 let newLink = `https://www.reddit.com/${subReddit['data']['permalink']}`
                 this.links.push(newLink)
@@ -44,7 +44,7 @@ class RoboReplier {
         const repliesToComment = comment['data']['replies']['data'];
         if (repliesToComment) {
             repliesToComment['children'].forEach(repComment => {
-                if (repComment['data']['score'] >= 5) {
+                if (repComment['data']['score'] >= 40) {
                     let repBody = repComment['data']['body']
                     if (repBody) {
                         if (!isReddit(repBody.toLowerCase())) {
