@@ -34,11 +34,13 @@ class RoboReplier {
         const repliesToComment = comment['data']['replies']['data'];
         if (repliesToComment) {
             repliesToComment['children'].forEach(repComment => {
-                let repBody = repComment['data']['body']
-                if (repBody) {
-                    if (!isReddit(repBody.toLowerCase())) {
-                        this.allData.push(repBody)
-                        this.getReplies(repComment)
+                if (repComment['data']['score'] >= 20) {
+                    let repBody = repComment['data']['body']
+                    if (repBody) {
+                        if (!isReddit(repBody.toLowerCase())) {
+                            this.allData.push(repBody)
+                            this.getReplies(repComment)
+                        };
                     };
                 };
             });    
