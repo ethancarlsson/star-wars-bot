@@ -30,6 +30,21 @@ class RoboReplier {
 
         this.getResponses()
     };
+    getReplies = (comment) => {
+        const repliesToComment = comment['data']['replies']['data'];
+        if (repliesToComment) {
+            repliesToComment['children'].forEach(repComment => {
+                let repBody = repComment['data']['body']
+                if (repBody) {
+                    if (!isReddit(repBody.toLowerCase())) {
+                        this.allData.push(repBody)
+                        this.getReplies(repComment)
+                    };
+                };
+            });    
+        };
+    };
+
     getResponses = () => {
         for (const link of this.links) {
             $.ajax({
@@ -39,9 +54,10 @@ class RoboReplier {
                     let commentBody = comment['data']['body']
                     if (commentBody){
                         if (!isReddit(commentBody.toLowerCase())) {
-                            this.allData.push(commentBody)}
-                        }
-                    
+                            this.allData.push(commentBody);
+                            this.getReplies(comment);
+                        };
+                    };
                 });
             });    
         };
@@ -49,7 +65,7 @@ class RoboReplier {
 
     respond = (que) => {
         let str = que.toLowerCase()
-        const reGreet = /hello|hi|greetings|hey/;
+        const reGreet = /hello |hi |greetings |hey /;
         const reHello = /hello there/;
         const reStory = /story|tale/;
         const reKenobi = /kenobi/
@@ -63,7 +79,6 @@ class RoboReplier {
             return "You are strong and wise, and I am very proud of you."
         };
         let hiNmbr = this.allData.length;
-        // console.log(hiNmbr)
         return this.allData[randInt(0, hiNmbr)]
     };
 
