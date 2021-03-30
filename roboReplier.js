@@ -27,14 +27,24 @@ class RoboReplier {
             "https://www.reddit.com/r/PrequelMemes/comments/jzh9yx/cough_cough_shards_of_the_past.json",
         ]
         this.tragedy = `Did you ever hear the tragedy of Darth Plagueis The Wise? I thought not. It’s not a story the Jedi would tell you. It’s a Sith legend. Darth Plagueis was a Dark Lord of the Sith, so powerful and so wise he could use the Force to influence the midichlorians to create life… He had such a knowledge of the dark side that he could even keep the ones he cared about from dying. The dark side of the Force is a pathway to many abilities some consider to be unnatural. He became so powerful… the only thing he was afraid of was losing his power, which eventually, of course, he did. Unfortunately, he taught his apprentice everything he knew, then his apprentice killed him in his sleep. Ironic. He could save others from death, but not himself.`
-
+        this.getHottest()
         this.getResponses()
     };
+
+    getHottest = () => {
+        $.ajax({url: 'https://www.reddit.com/r/PrequelMemes.json'}).done((r) => {
+            r['data']['children'].forEach(subReddit => {
+                let newLink = `https://www.reddit.com/${subReddit['data']['permalink']}`
+                this.links.push(newLink)
+            });
+        });
+    };
+
     getReplies = (comment) => {
         const repliesToComment = comment['data']['replies']['data'];
         if (repliesToComment) {
             repliesToComment['children'].forEach(repComment => {
-                if (repComment['data']['score'] >= 20) {
+                if (repComment['data']['score'] >= 5) {
                     let repBody = repComment['data']['body']
                     if (repBody) {
                         if (!isReddit(repBody.toLowerCase())) {
@@ -67,7 +77,7 @@ class RoboReplier {
 
     respond = (que) => {
         let str = que.toLowerCase()
-        const reGreet = /hello |hi |greetings |hey /;
+        const reGreet = /hello |hi |hey |^hello|^hi|^hey/;
         const reHello = /hello there/;
         const reStory = /story|tale/;
         const reKenobi = /kenobi/
@@ -81,6 +91,7 @@ class RoboReplier {
             return "You are strong and wise, and I am very proud of you."
         };
         let hiNmbr = this.allData.length;
+        console.log(randInt(0, hiNmbr))
         return this.allData[randInt(0, hiNmbr)]
     };
 

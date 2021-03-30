@@ -60,13 +60,38 @@
     outline: none;
 }
 
+@keyframes gradient {
+    0% {   
+        background: radial-gradient(ellipse at bottom, #d80e41 100%, #151644 0%);
+    };
+    25% {   
+        background: radial-gradient(ellipse at bottom, #cf9a0a 0%, #151644 100%);
+    };
+    50% {   
+        background: radial-gradient(ellipse at bottom, #d42222 100%, #151644 0%);
+    };
+    75% {   
+        background: radial-gradient(ellipse at bottom, #da1b1b 0%, #151644 100%);
+    };
+    100% {   
+        background: radial-gradient(ellipse at bottom, #dacd1b 100%, #151644 0%);
+    };
+
+}
+
 /* taken from: https://tobiasahlin.com/blog/common-flexbox-patterns/#alternating-grid */
 .background {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    background: linear-gradient(#da1b1b, #c62068, #5d2fa9, #4cddd6);
-}
+    /* animation-name: gradient;
+    /* animation-duration: 1s; */
+    /* animation-iteration-count: infinite;
+    animation-direction: alternate; */
+    background: radial-gradient(ellipse at bottom, #F87100 0%, #050100 100%);
+
+  }
+
 
 .header {
     width: 100%;
@@ -91,7 +116,7 @@
 
 .chat-name {
     font-family: Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: x-large;
+    font-size: large;
     color: #f0f0f0;
     overflow: hidden;
     text-overflow: ellipsis;
