@@ -49,6 +49,7 @@ class RoboReplier {
                     if (repBody) {
                         if (!isReddit(repBody.toLowerCase())) {
                             this.allData.push(repBody)
+                            // recurses in order to pull in comment chains of varible depth.
                             this.getReplies(repComment)
                         };
                     };
@@ -80,7 +81,7 @@ class RoboReplier {
         const reGreet = /hello |hi |hey |^hello|^hi|^hey/;
         const reHello = /hello there/;
         const reStory = /story|tale/;
-        const reKenobi = /kenobi/
+        const reKenobi = /kenobi/;
         if (reHello.test(str)) {
             return "General Kenobi!"
         } else if (reGreet.test(str)) {
@@ -91,7 +92,6 @@ class RoboReplier {
             return "You are strong and wise, and I am very proud of you."
         };
         let hiNmbr = this.allData.length;
-        console.log(randInt(0, hiNmbr))
         return this.allData[randInt(0, hiNmbr)]
     };
 

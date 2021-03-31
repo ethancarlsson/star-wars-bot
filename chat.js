@@ -53,7 +53,7 @@ class Messenger {
         
     };
 
-    async roboReply () {
+    roboReply () {
         const reply = replier.respond(this.messageContent);
         const messageClass = this.setMessageClass(reply);
         const dateTime = new Date()
